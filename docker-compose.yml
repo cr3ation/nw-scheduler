@@ -1,0 +1,31 @@
+version: '3.9'
+
+services:
+  app:
+    build:
+      context: ./django/
+    command:
+      sh -c "python manage.py makemigrations &&
+            python manage.py migrate &&
+            python manage.py runserver 0.0.0.0:8000 &&
+            python manage.py runworkers""
+    ports:
+      - 8000:8000
+      - 3000:3000
+    volumes:
+      - ./django/app:/app
+    environment:
+      - SECRET_KEY=secretkey
+      - DEBUG=1
+      - ALLOWED_HOSTS=127.0.0.1
+      - NW_CLUB_ID=129
+      - NW_USER_ID=123456
+      - NW_EMPLOYE_ID=1234
+      - PUSHOVER_USER=pushoveruser
+      - PUSHOVER_TOKEN=pushovertoken
+
+  curl-loop:
+    build: ./curl-loop/
+    depends_on: app
+    environment:
+      - TZ=Europe/Stockholm
