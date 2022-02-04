@@ -22,14 +22,25 @@ python manage.py runworkers
 
 
 ### Environment Variables
-Open `docker-compose.yml` and edit `SECRET_KEY`, `DEBUG`, `ALLOWED_HOSTS`, `NW_CLUB_ID`, `NW_USER_ID`, `NW_EMPLOYE_ID`, `PUSHOVER_USER` and `PUSHOVER_TOKEN`
+Open `docker-compose.yml` and edit the mandatory `ALLOWED_HOSTS`, `NW_CLUB_ID`, `NW_USER_ID`.
 
-* `SECRET_KEY` – Used by django. Can be whatever *(mandatory)*
-* `DEBUG` – `0` is False, `1` is True *(mandatory)*
-* `ALLOWED_HOSTS` – `127.0.0.1,*,localhost` *(mandatory)*
+Optional environment variables:
+`SECRET_KEY`, `DEBUG`, `NW_EMPLOYE_ID`, `DB_NAME`, `DB_USER`, `DB_PASS`, `POSTGRES_DB`, `DB_NAME`, `POSTGRES_USER`, `POSTGRES_PASSWORD`, `PUSHOVER_USER`, `PUSHOVER_TOKEN`
+
+#### Description
+* `SECRET_KEY` – Used by django. Can be whatever *(secretkey is default)*
+* `DEBUG` – `0` is False, `1` is True *(0 is default)*
+* `ALLOWED_HOSTS` – `127.0.0.1,*,localhost` *(127.0.0.1 is default)*
 * `NW_CLUB_ID` – ID of a Nordic Wellness club. Use Chrome developer tools to filter requests from https://nordicwellness.se/boka/ to find your club *(mandatory)*
 * `NW_USER_ID` – ID of your Nordic Wellness user. Is always a numeric id *(mandatory)*
 * `NW_EMPLOYE_ID` – Filter group activity by your favorite leader. Is always a numeric id *(optional)*
+* `DB_NAME` – Database name *(db is default)*
+* `DB_USER` – Database user *(devuser is default)*
+* `DB_PASS` – Database password *(changeme is default)*
+* `POSTGRES_DB` – Same as `DB_NAME` *(db is default)*
+* `POSTGRES_USER` – Same as `DB_USER` *(devuser is default)*
+* `POSTGRES_PASSWORD` Same as `DB_PASS` *(changeme is default)*
+* `DEBUG` – `0` is False, `1` is True *(0 is default)*
 * `PUSHOVER_USER` – Used for push notifications *(optional)*
 * `PUSHOVER_TOKEN` – Used for push notification *(optional)*
 

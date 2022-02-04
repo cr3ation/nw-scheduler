@@ -23,6 +23,19 @@ services:
       - NW_EMPLOYE_ID=${NW_EMPLOYE_ID}
       - PUSHOVER_USER=${PUSHOVER_USER}
       - PUSHOVER_TOKEN=${PUSHOVER_TOKEN}
+      - DB_HOST=db
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13-alpine
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
 
   curl-loop:
     build: ./curl-loop/
@@ -30,4 +43,3 @@ services:
       - TZ=Europe/Stockholm
     depends_on: 
       - app
-  
