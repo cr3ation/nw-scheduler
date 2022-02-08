@@ -1,10 +1,22 @@
-FROM alpine:3.15
-ENV SLEEP 1
-ENV URI http://app:8000/scheduled/
-RUN apk add --no-cache curl
+FROM python:3.8-alpine3.15
+LABEL maintainer="henrikengstrom.com"
 
-# Supress curl output
-# CMD ["sh", "-c", "while sleep ${SLEEP}s; do curl -s ${URI}; done"]
+ENV PYTHONUNBUFFERED 1
 
-# Verbose output
-CMD ["sh", "-c", "while sleep ${SLEEP}s; do RESPONSE=$(curl -sb -H 'Accept: application/json' ${URI}); echo -n $(date +'%T') ; echo -n ' - '; echo $RESPONSE; done"]
+COPY ./requirements.txt /requirements.txt
+COPY ./app ./app
+WORKDIR /app
+
+# Install gcc
+RUN apk add --update build-base && \
+    apk add --no-cache curl
+
+# Install venv, requirements and user 
+RUN python -m venv /py && \
+    /py/bin/pip install --upgrade pip && \
+    /py/bin/pip install -r /requirements.txt && \
+    adduser --disabled-password --no-create-home app
+
+ENV PATH="/py/bin:$PATH"
+
+USER app

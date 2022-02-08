@@ -8,7 +8,7 @@ Group activities is being fetched automatically every 15 min. They can also be f
 ## Installation
 You need docker and docker-compose to be installed before continue.
 
- 1. Open and update `docker-compose.yml`. See *Environment Variables* section below
+ 1. Edit `docker-compose.yml`. See *Environment Variables* section below
  2. Build and run docker images
 ```shell
 docker-compose build && docker-compose up

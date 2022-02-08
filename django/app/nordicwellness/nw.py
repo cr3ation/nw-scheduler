@@ -85,7 +85,7 @@ def _del(url):
 
 # GET METHODS
 def get_activities():
-    dates = get_datestring()
+    dates = ""
 
     url = "/GroupActivity/timeslot?clubIds={0}&activities=&dates={1}&time=&employees={2}&datespan=true&userId={3}".format(conf.clubid, dates, conf.employeeid, conf.userid)
     data = _get(url)

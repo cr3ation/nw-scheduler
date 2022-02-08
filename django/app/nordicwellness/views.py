@@ -51,7 +51,12 @@ def scheduled(request):
     if not activity:
         activity = Activity.objects.filter(scheduledbooking=True).order_by("starttime").exclude(status="Booked").first()
         if activity:
-            return JsonResponse({'message' : 'Nothing to do', 'upcoming': { 'Name': activity.name, 'BookingStartsAt' : activity.bookingstartsat } })
+            return JsonResponse({'message' : 'Nothing to do', 
+                                'upcoming': { 
+                                    'Name': activity.name, 
+                                    'Instructor': activity.instructor, 
+                                    'BookingStartsAt' : activity.bookingstartsat } 
+                                })
         else:
             return JsonResponse({'message' : 'No scheduled bookings'})
 
@@ -62,7 +67,7 @@ def scheduled(request):
             activity.status = "Booked"
             activity.scheduledbooking = False
             activity.save()
-        pushover.send(activity)
+            pushover.send(activity)
         return JsonResponse({'Name': activity.name , 'Response' : res })
     return JsonResponse({'message': 'Something went wrong with scheduled booking.' })
 
