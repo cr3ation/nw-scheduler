@@ -54,9 +54,9 @@ Optional environment variables:
 *  `./django/app:/app` - Main application
 
 ### URLs
-`http://localhost:8000` – homepage
-`http://localhost:8000/admin` – admin page. Use credentials created in step 3 during installation
-`http://localhost:8000/fetch`– fetch data on demand from Nordic Wellness API
+`http://localhost:8000` – homepage  
+`http://localhost:8000/admin` – admin page. Use superuser credentials created in step 3 of the installation instructions
+`http://localhost:8000/fetch`– fetch data on demand from Nordic Wellness API  
 
 ### Useful File Locations (inside container)
 *  `/app/` - Django application
