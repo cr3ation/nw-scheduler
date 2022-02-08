@@ -37,9 +37,9 @@ services:
       - POSTGRES_PASSWORD=${DB_PASS}
 
   curl-loop:
-    build: ./curl-loop/
+    build: ./infinite-loop/
     command:
-      sh -c "python jobs.py"
+      sh -c "python loop.py"
     environment:
       - TZ=Europe/Stockholm
     depends_on: 
