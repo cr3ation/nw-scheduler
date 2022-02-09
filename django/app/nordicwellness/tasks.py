@@ -4,7 +4,7 @@ from django.utils import timezone
 from nordicwellness.models import Activity
 import nordicwellness.nw
 
-@task(schedule=60*15)
+@task(schedule=60*20)
 def check_new_activitites():
     update_database()
 

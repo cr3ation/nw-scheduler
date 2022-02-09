@@ -7,11 +7,17 @@ api_url = "http://app:8000/scheduled"
 # Nice looking output
 def print_message(message):
     now = datetime.now()
-    current_time = now.strftime("%Y-%m-%d %H:%M:%S")
+    current_time = now.strftime("%H:%M:%S") # Use "%Y-%m-%d %H:%M:%S" to include date    
     print(f"[{current_time}] {message}")
 
 # Wait for other services to start
 time.sleep(5)
+
+print("")
+print("Upcoming booking will be fetched every 10 min.")
+print("Booking will occur same second as a scheduled booking opens.")
+print("Once a booking is completed, the next upcoming booking will be feched immediately")
+print("")
 
 while True:
     data = None
@@ -32,16 +38,16 @@ while True:
 
     # Wait and retry if no scheduled bookings
     elif "No scheduled bookings" in data["message"]:
-        print_message("No scheduled bookings. Refresh in 5 min...")
-        time.sleep(300)
+        print_message("No scheduled bookings. Refresh in 10 min...")
+        time.sleep(600)
         continue
 
     # Upcoming bookings exist
     elif data["upcoming"]:
         booking = datetime.strptime(data["upcoming"]["BookingStartsAt"], "%Y-%m-%dT%H:%M:%SZ") #2022-02-05T10:00:00Z
-        print_message("Upcoming: {0} ({1}). Booking starts at: {2}. Refresh in 5 min...".format(data["upcoming"]["Name"], data["upcoming"]["Instructor"], booking))
+        print_message("Upcoming: {0} ({1}). Booking starts at: {2}.".format(data["upcoming"]["Name"], data["upcoming"]["Instructor"]))
         # Check every second if booking is opened
-        for i in range(300):
+        for i in range(600):
             now = datetime.now()
             # Openened!
             if now > booking:
