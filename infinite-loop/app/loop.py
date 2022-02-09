@@ -14,8 +14,8 @@ def print_message(message):
 time.sleep(5)
 
 print("")
-print("Upcoming booking will be fetched every 10 min.")
-print("Booking will occur same second as a scheduled booking opens.")
+print("The next booking will be fetched every 10 min")
+print("Booking request will occur same second as a booking opens")
 print("Once a booking is completed, the next upcoming booking will be feched immediately")
 print("")
 

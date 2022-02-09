@@ -7,8 +7,7 @@ import nordicwellness.nw
 @task(schedule=60*20)
 def check_new_activitites():
     update_database()
-
-
+    
 
 def update_database():
     """Fetch data from Nordic Wellness and adds/updates the local database"""
