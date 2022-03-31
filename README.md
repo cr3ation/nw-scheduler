@@ -18,7 +18,7 @@ You need docker and docker-compose to be installed before continue.
 ```shell
 docker-compose build && docker-compose up
 ```
- 3. Open a shell in to the docker container `nw-scheduler-app` and create a superuser to access the `http://server:8000/admin` interface. Then then start workers to fetch data from Nordic Wellness every 15 min
+ 3. Open a shell in to the docker container `nw-scheduler-app` and create a superuser to access the `http://server:8000/admin` interface. Then then start workers to fetch data from Nordic Wellness every 20 min
  ````shell
 python manage.py createsuperuser
 ... 
