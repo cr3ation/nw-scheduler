@@ -3,7 +3,7 @@
 
 Or `nw-scheduler` is a Django based application running in docker to manage scheduling of booking of group activities. So you can spend your time drinking beer. 
 
-Group activities is being fetched from Nordic Wellness every 15 min and stored in the local database. If needed, fetchning new data can manually initiated with the blue `Refresh` button on the bottom of `http://server:8000`
+Group activities is being fetched from Nordic Wellness every 20 min and stored in the local database. If needed, fetchning new data can manually initiated with the blue `Refresh` button on the bottom of `http://server:8000`
 
 *Nordic Wellness Scheduler* consists of 3 docker containers  
 `db` – Postgresql database  
@@ -18,7 +18,7 @@ You need docker and docker-compose to be installed before continue.
 ```shell
 docker-compose build && docker-compose up
 ```
- 3. Open a shell in to the docker container `nw-scheduler-app` and create a superuser to access the `http://server:8000/admin` interface. Then then start workers to fetch data from Nordic Wellness every 15 min
+ 3. Open a shell in to the docker container `nw-scheduler-app` and create a superuser to access the `http://server:8000/admin` interface. Then then start workers to fetch data from Nordic Wellness every 20 min
  ````shell
 python manage.py createsuperuser
 ... 
