@@ -30,31 +30,35 @@ while True:
         print_message(f"Could not connect to {api_url} Retry in 10 sec.")
         time.sleep(10)
 
-    # Wait and retry if no data returned
-    if not data:
-        print_message(f"{api_url} did not return any data. Retry in 10 sec.")
-        time.sleep(10)
-        continue
+    try:
+        # Wait and retry if no data returned
+        if not data:
+            print_message(f"{api_url} did not return any data. Retry in 10 sec.")
+            time.sleep(10)
+            continue
 
-    # Wait and retry if no scheduled bookings
-    elif "No scheduled bookings" in data["message"]:
-        print_message("No scheduled bookings. Refresh in 10 min...")
+        # Wait and retry if no scheduled bookings
+        elif "No scheduled bookings" in data["message"]:
+            print_message("No scheduled bookings. Refresh in 10 min...")
+            time.sleep(600)
+            continue
+
+        # Upcoming bookings exist
+        elif data["upcoming"]:
+            booking = datetime.strptime(data["upcoming"]["BookingStartsAt"], "%Y-%m-%dT%H:%M:%SZ") #2022-02-05T10:00:00Z
+            print_message("Upcoming: {0} ({1}). Booking starts at: {2}.".format(data["upcoming"]["Name"], data["upcoming"]["Instructor"]))
+            # Check every second if booking is opened
+            for i in range(600):
+                now = datetime.now()
+                # Openened!
+                if now > booking:
+                    response = requests.get(api_url)
+                    data = response.text
+                    print_message(data)
+                    # 
+                    if "Booked" in data:
+                        break
+                time.sleep(1)
+    except Exception as err:
+        print(data)
         time.sleep(600)
-        continue
-
-    # Upcoming bookings exist
-    elif data["upcoming"]:
-        booking = datetime.strptime(data["upcoming"]["BookingStartsAt"], "%Y-%m-%dT%H:%M:%SZ") #2022-02-05T10:00:00Z
-        print_message("Upcoming: {0} ({1}). Booking starts at: {2}.".format(data["upcoming"]["Name"], data["upcoming"]["Instructor"]))
-        # Check every second if booking is opened
-        for i in range(600):
-            now = datetime.now()
-            # Openened!
-            if now > booking:
-                response = requests.get(api_url)
-                data = response.text
-                print_message(data)
-                # 
-                if "Booked" in data:
-                    break
-            time.sleep(1)
