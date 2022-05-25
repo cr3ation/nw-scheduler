@@ -3,7 +3,6 @@ import requests
 import time
 
 api_url = "http://app:8000/scheduled"
-api_url = "http://henrikengstrom.asuscomm.com:8055/scheduled"
 
 # Nice looking output
 def print_message(message):
@@ -61,5 +60,5 @@ while True:
                         break
                 time.sleep(1)
     except Exception as err:
-        print(data)
+        print(f"An exeption was thrown! {err}... Data: {data}")
         time.sleep(600)
