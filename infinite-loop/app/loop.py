@@ -3,6 +3,7 @@ import requests
 import time
 
 api_url = "http://app:8000/scheduled"
+api_url = "http://henrikengstrom.asuscomm.com:8055/scheduled"
 
 # Nice looking output
 def print_message(message):
@@ -46,7 +47,7 @@ while True:
         # Upcoming bookings exist
         elif data["upcoming"]:
             booking = datetime.strptime(data["upcoming"]["BookingStartsAt"], "%Y-%m-%dT%H:%M:%SZ") #2022-02-05T10:00:00Z
-            print_message("Upcoming: {0} ({1}). Booking starts at: {2}.".format(data["upcoming"]["Name"], data["upcoming"]["Instructor"]))
+            print_message(f"Upcoming: {data['upcoming']['Name']} ({data['upcoming']['Instructor']}). Booking starts at: {booking}.")
             # Check every second if booking is opened
             for i in range(600):
                 now = datetime.now()
