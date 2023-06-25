@@ -1,4 +1,4 @@
-from pushover import Client
+from pushover import Pushover
 from nordicwellness.config import settings as conf
 
 def send(activity):
@@ -14,5 +14,10 @@ def __send(message, title):
     if not message or not title:
         return
     
-    client = Client(conf.pushover_user, api_token=conf.pushover_token)
-    client.send_message(message, title=title)
+    pushover = Pushover(conf.pushover_token)
+    pushover.user(conf.pushover_user)
+
+    msg = pushover.msg(message)
+    msg.set("title", title)
+
+    pushover.send(msg)

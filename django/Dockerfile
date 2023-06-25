@@ -16,6 +16,7 @@ RUN apk add --update build-base
 RUN python -m venv /py && \
     /py/bin/pip install --upgrade pip && \
     apk add --update --no-cache postgresql-client && \
+    apk add --update --no-cache git && \
     apk add --update --no-cache --virtual .tmp-deps \
         build-base postgresql-dev musl-dev && \
     /py/bin/pip install -r /requirements.txt && \
