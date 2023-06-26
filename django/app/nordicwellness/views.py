@@ -44,7 +44,7 @@ def command(request, id, cmd):
 
 def scheduled(request):
     # Find scheduled bookings
-    now = timezone.now() + timedelta(minutes=60)
+    now = timezone.make_aware(datetime.now())
     activity = Activity.objects.filter(scheduledbooking=True, bookingstartsat__lt = now).order_by("starttime").exclude(status="Booked").first()
 
     # Nothing to do
@@ -55,7 +55,7 @@ def scheduled(request):
                                 'upcoming': { 
                                     'Name': activity.name, 
                                     'Instructor': activity.instructor, 
-                                    'BookingStartsAt' : activity.bookingstartsat } 
+                                    'BookingStartsAt' : activity.bookingstartsat.astimezone(timezone.get_current_timezone()).isoformat() } 
                                 })
         else:
             return JsonResponse({'message' : 'No scheduled bookings'})

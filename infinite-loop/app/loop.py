@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 import requests
 import time
 
@@ -7,16 +7,17 @@ api_url = "http://app:8000/scheduled"
 # Nice looking output
 def print_message(message):
     now = datetime.now()
-    current_time = now.strftime("%H:%M:%S") # Use "%Y-%m-%d %H:%M:%S" to include date    
+    current_time = now.strftime("%H:%M:%S")  # Use "%Y-%m-%d %H:%M:%S" to include date
     print(f"[{current_time}] {message}")
+
 
 # Wait for other services to start
 time.sleep(5)
 
 print("")
 print("The next booking will be fetched every 10 min")
-print("Booking request will occur same second as a booking opens")
-print("Once a booking is completed, the next upcoming booking will be feched immediately")
+print("Booking request will occur the same second as a booking opens")
+print("Once a booking is completed, the next upcoming booking will be fetched immediately")
 print("")
 
 while True:
@@ -25,10 +26,16 @@ while True:
     # Fetch data
     try:
         response = requests.get(api_url)
+        response.raise_for_status()  # Raise an exception for non-2xx response status codes
         data = response.json()
-    except Exception as err:
-        print_message(f"Could not connect to {api_url} Retry in 10 sec.")
+    except requests.exceptions.RequestException as err:
+        print_message(f"An error occurred while connecting to {api_url}: {err}. Retry in 10 sec.")
         time.sleep(10)
+        continue
+    except ValueError as err:
+        print_message(f"Failed to parse response data from {api_url}: {err}. Retry in 10 sec.")
+        time.sleep(10)
+        continue
 
     try:
         # Wait and retry if no data returned
@@ -45,20 +52,35 @@ while True:
 
         # Upcoming bookings exist
         elif data["upcoming"]:
-            booking = datetime.strptime(data["upcoming"]["BookingStartsAt"], "%Y-%m-%dT%H:%M:%SZ") #2022-02-05T10:00:00Z
+            # Parse the booking datetime string and make it offset-naive
+            booking = datetime.strptime(data["upcoming"]["BookingStartsAt"], "%Y-%m-%dT%H:%M:%S%z").replace(tzinfo=None)
             print_message(f"Upcoming: {data['upcoming']['Name']} ({data['upcoming']['Instructor']}). Booking starts at: {booking}.")
+
             # Check every second if booking is opened
             for i in range(600):
+                # Get the current time as an offset-naive datetime
                 now = datetime.now()
-                # Openened!
+                print_message(f"Now: {now}   |   Booking start: {booking}")
+
+                # Opened!
                 if now > booking:
-                    response = requests.get(api_url)
-                    data = response.text
-                    print_message(data)
-                    # 
+                    try:
+                        response = requests.get(api_url)
+                        response.raise_for_status()  # Raise an exception for non-2xx response status codes
+                        data = response.text
+                        print_message(data)
+                    except requests.exceptions.RequestException as err:
+                        print_message(f"An error occurred while connecting to {api_url}: {err}. Retry in 10 sec.")
+                        time.sleep(10)
+                        break
+                    except ValueError as err:
+                        print_message(f"Failed to parse response data from {api_url}: {err}. Retry in 10 sec.")
+                        time.sleep(10)
+                        break
+
                     if "Booked" in data:
                         break
                 time.sleep(1)
     except Exception as err:
-        print(f"An exeption was thrown! {err}... Data: {data}")
+        print(f"An exception was thrown! {err}... Data: {data}")
         time.sleep(600)

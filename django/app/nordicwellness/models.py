@@ -44,15 +44,19 @@ class Activity(models.Model):
     @property
     def booking_started(self):
         """True if booking has started. Else False."""
-        now = timezone.now() + timedelta(minutes=60)
+        now = timezone.make_aware(datetime.now())
         # now = timezone.now()
-        booking_opens = self.endtime - timedelta(days=7) + timedelta(minutes=30)
+        booking_opens = self.endtime.astimezone(timezone.get_current_timezone())
+        booking_opens = booking_opens - timedelta(days=7) + timedelta(minutes=30)
+        #booking_opens = timezone.make_aware(self.endtime) - timedelta(days=7) + timedelta(minutes=30)
         return now > booking_opens
 
     @property
     def start_time_str(self):
-        return self.starttime.strftime("%a %d %b. kl. %H.%M")
-
+        starttime = self.starttime.astimezone(timezone.get_current_timezone())
+        return starttime.strftime("%a %d %b. kl. %H.%M")
+    #    return self.starttime.strftime("%a %d %b. kl. %H.%M")
+    
 
 
 

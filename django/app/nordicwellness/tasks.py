@@ -7,7 +7,6 @@ import nordicwellness.nw
 @task(schedule=60*20)
 def check_new_activitites():
     update_database()
-    
 
 def update_database():
     """Fetch data from Nordic Wellness and adds/updates the local database"""
@@ -17,35 +16,50 @@ def update_database():
         nw_activities = nordicwellness.nw.get_activities()["groupActivities"]
         if len(nw_activities) > 0:
             break
-    
+
     for nw_activity in nw_activities:
         activity = None
-        if Activity.objects.filter(id = nw_activity["Id"]).exists():
+
+        # Skip virtual activities. No one goes there anyway.
+        if "Virtuell" in nw_activity["Instructor"]:
+            continue
+
+        if Activity.objects.filter(id=nw_activity["Id"]).exists():
             # at least one object satisfying query exists
-            activity = Activity.objects.get(id = nw_activity["Id"])
+            activity = Activity.objects.get(id=nw_activity["Id"])
         else:
             # no object satisfying query exists
             activity = Activity()
             activity.id = nw_activity["Id"]
-            
+
         activity.bookingid = nw_activity["BookingId"]
         activity.description = nw_activity["Description"]
         activity.dropin = nw_activity["Dropin"]
         activity.dropsamount = nw_activity["DropsAmount"]
-        activity.endtime = timezone.make_aware(datetime.strptime(nw_activity["EndTime"], "%Y-%m-%dT%H:%M:%S"))
+        activity.endtime = timezone.make_aware(
+            datetime.strptime(nw_activity["EndTime"], "%Y-%m-%dT%H:%M:%S")
+        )
         activity.freeslots = nw_activity["FreeSlots"]
         activity.instructor = nw_activity["Instructor"]
         activity.instructorid = nw_activity["InstructorId"]
         activity.imageurl = nw_activity["ImageUrl"]
         activity.location = nw_activity["Location"]
-        activity.name = nw_activity["Name"]            
+        activity.name = nw_activity["Name"]
         activity.message = nw_activity["Message"]
-        activity.starttime = timezone.make_aware(datetime.strptime(nw_activity["StartTime"], "%Y-%m-%dT%H:%M:%S")) #2022-02-05T10:00:00
+        activity.starttime = timezone.make_aware(
+            datetime.strptime(nw_activity["StartTime"], "%Y-%m-%dT%H:%M:%S")
+        )
         activity.status = nw_activity["Status"]
-        activity.bookingstartsat = timezone.make_aware(datetime.strptime(nw_activity["EndTime"], "%Y-%m-%dT%H:%M:%S") - timedelta(days=7) + timedelta(minutes=30))
+        activity.bookingstartsat = (
+            timezone.make_aware(
+                datetime.strptime(nw_activity["EndTime"], "%Y-%m-%dT%H:%M:%S")
+                - timedelta(days=7)
+                + timedelta(minutes=30)
+            )
+        )
         activity.bookingstartatstr = activity.bookingstartsat.strftime("%a %d %b. kl. %H.%M")
-        activity.save() 
-        
+        activity.save()
+
         # Image
         if activity.imageurl:
             activity.imageurl = activity.imageurl

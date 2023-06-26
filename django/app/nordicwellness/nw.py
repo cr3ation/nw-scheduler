@@ -11,16 +11,14 @@ def _get(url):
 
     Returns: 
     json: json object. None if serialnumber not found or failed to contact API."""
+    res = None  # Initialize res to None
     try:
         conn = http.client.HTTPSConnection(conf.server)
 
         # Generate credentials with
         # printf "username:password" | iconv -p ISO-8859-1 | base64 -i -
 
-        headers = {
-            # 'authorization': "Basic %s" % (conf.jss_credential),
-            'Accept': 'application/json'
-        }
+        headers = { 'Accept': 'application/json' }
 
         conn.request("GET", url, headers=headers)
         res = conn.getresponse()

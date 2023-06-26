@@ -12,6 +12,9 @@ EXPOSE 8000
 # Install gcc
 RUN apk add --update build-base
 
+# Install TimeZone support
+RUN apk add --no-cache tzdata
+
 # Install venv, requirements and user 
 RUN python -m venv /py && \
     /py/bin/pip install --upgrade pip && \

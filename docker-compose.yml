@@ -27,6 +27,7 @@ services:
       - DB_NAME=devdb
       - DB_USER=devuser
       - DB_PASS=changeme
+      - TZ=Europe/Stockholm
     depends_on:
       - db
 
