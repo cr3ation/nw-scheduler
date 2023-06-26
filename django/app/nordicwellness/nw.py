@@ -28,7 +28,10 @@ def _get(url):
         data = json.loads(data)
         return data
     except Exception as err:
-        logging.error("[GET] {0} - HTTP status: {1}. {2}".format(url, res.status, err))
+        if res:
+            logging.error("[GET] {0} - HTTP status: {1}. {2}".format(url, res.status, err))
+        else:
+            logging.error("[GET] {0} - Failed to contact API. {1}".format(url, err))
         return None
 
 def _post(url, payload):
