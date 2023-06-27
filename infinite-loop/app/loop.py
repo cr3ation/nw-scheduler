@@ -54,7 +54,7 @@ while True:
         elif data["upcoming"]:
             # Parse the booking datetime string and make it offset-naive
             booking = datetime.strptime(data["upcoming"]["BookingStartsAt"], "%Y-%m-%dT%H:%M:%S%z").replace(tzinfo=None)
-            print_message(f"Upcoming: {data['upcoming']['Name']} ({data['upcoming']['Instructor']}). Booking starts at: {booking}.")
+            # print_message(f"Upcoming: {data['upcoming']['Name']} ({data['upcoming']['Instructor']}). Booking starts at: {booking}.")
 
             # Check every second if booking is opened
             for i in range(600):
