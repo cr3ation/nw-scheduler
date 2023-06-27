@@ -71,8 +71,8 @@ def update_database():
             activity.imageurl = "https://henrikengstrom.com/images/nw-scheduler/bodybalance.jpeg"
         elif "CORE" in activity.name:
             activity.imageurl = "https://lesmillslegacypriv.blob.core.windows.net/media/1030/erin-maw-bicycle-crunch-960x540.jpg?width=500&height=281.25"
-        elif "CROSSCHALLANGE" in activity.name:
-            activity.imageurl = "https://henrikengstrom.com/images/nw-scheduler/crosschallange.jpeg"
+        elif "CROSSCHALLENGE" in activity.name:
+            activity.imageurl = "https://henrikengstrom.com/images/nw-scheduler/crosschallenge.jpeg"
         elif "GRIT" in activity.name:
             activity.imageurl = "https://lmimirror3pvr.azureedge.net/static/media/10902/5bc08000-7331-4420-9b20-28f61222e3d2/grit-research-landing-page-960x540.jpg"
         elif "SPRINT" in activity.name:
