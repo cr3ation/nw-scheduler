@@ -63,18 +63,20 @@ def update_database():
         # Image
         if activity.imageurl:
             activity.imageurl = activity.imageurl
+        elif "ATTACK" in activity.name:
+            activity.imageurl = "https://lmimirror3pvr.azureedge.net/static/media/12222/131cbbdf-c082-4f2d-af26-a8a45c6737fc/bodycombat_960x540.jpg"
         elif "BODYPUMP" in activity.name:
             activity.imageurl = "https://lmimirror3pvr.azureedge.net/static/media/25639/0bed8d8f-43c5-4d22-95ae-2f4c2f93b8ca/bp-front-squat_960x540px.jpg"
         elif "BODYBALANCE" in activity.name:
-            activity.imageurl = "https://lmimirror3pvr.azureedge.net/static/media/12214/3a262f41-3527-44ee-b223-6e719bfa30fa/bodybalance_960x480.jpg"
+            activity.imageurl = "https://henrikengstrom.com/images/nw-scheduler/bodybalance.jpeg"
         elif "CORE" in activity.name:
             activity.imageurl = "https://lesmillslegacypriv.blob.core.windows.net/media/1030/erin-maw-bicycle-crunch-960x540.jpg?width=500&height=281.25"
+        elif "CROSSCHALLANGE" in activity.name:
+            activity.imageurl = "https://henrikengstrom.com/images/nw-scheduler/crosschallange.jpeg"
         elif "GRIT" in activity.name:
             activity.imageurl = "https://lmimirror3pvr.azureedge.net/static/media/10902/5bc08000-7331-4420-9b20-28f61222e3d2/grit-research-landing-page-960x540.jpg"
         elif "SPRINT" in activity.name:
             activity.imageurl = "https://lmimirror3pvr.azureedge.net/static/media/13934/2b5bde16-dc62-4728-93c9-92a36b048de2/all-you-need-to-know-about-sprint-960x540.jpg"
-        elif "ATTACK" in activity.name:
-            activity.imageurl = "https://lmimirror3pvr.azureedge.net/static/media/12222/131cbbdf-c082-4f2d-af26-a8a45c6737fc/bodycombat_960x540.jpg"
         elif "THE TRIP" in activity.name.upper():
             activity.imageurl = "https://www.traena.com/media/2027/the-trip-_960x540.jpg"
         elif "RPM" in activity.name.upper():
@@ -83,6 +85,10 @@ def update_database():
             activity.imageurl = "https://media.sporthalsa.se/uploads/2018/03/yoga_meditation.jpg"
         elif "SENIOR" in activity.name.upper():
             activity.imageurl = "https://solvesborg.se/images/18.19ee726a174ba2ded9ad44/1600929634682/DSC09899-klar.jpg"
+        elif "STRENGTH DEVELOPMENT" in activity.name.upper():
+            activity.imageurl = "https://lmimirroralphapvr.azureedge.net/static/media/30679/19c59d47-c968-494b-984e-3840dabe50e2/erin-strength-development-960x540.jpg"
+        elif "ZUMBA" in activity.name.upper():
+            activity.imageurl = "https://henrikengstrom.com/images/nw-scheduler/zumba.jpeg"
         else:
             activity.imageurl = "https://henrikengstrom.com/images/unicorn-dress-up-girls.jpeg"
         activity.save()
