@@ -63,19 +63,19 @@ def update_database():
         # Image
         if activity.imageurl:
             activity.imageurl = activity.imageurl
-        elif "ATTACK" in activity.name:
+        elif "ATTACK" in activity.name.upper():
             activity.imageurl = "https://lmimirror3pvr.azureedge.net/static/media/12222/131cbbdf-c082-4f2d-af26-a8a45c6737fc/bodycombat_960x540.jpg"
-        elif "BODYPUMP" in activity.name:
+        elif "BODYPUMP" in activity.name.upper():
             activity.imageurl = "https://lmimirror3pvr.azureedge.net/static/media/25639/0bed8d8f-43c5-4d22-95ae-2f4c2f93b8ca/bp-front-squat_960x540px.jpg"
-        elif "BODYBALANCE" in activity.name:
+        elif "BODYBALANCE" in activity.name.upper():
             activity.imageurl = "https://henrikengstrom.com/images/nw-scheduler/bodybalance.jpeg"
-        elif "CORE" in activity.name:
+        elif "CORE" in activity.name.upper():
             activity.imageurl = "https://lesmillslegacypriv.blob.core.windows.net/media/1030/erin-maw-bicycle-crunch-960x540.jpg?width=500&height=281.25"
-        elif "CROSSCHALLENGE" in activity.name:
+        elif "CROSSCHALLENGE" in activity.name.upper():
             activity.imageurl = "https://henrikengstrom.com/images/nw-scheduler/crosschallenge.jpeg"
-        elif "GRIT" in activity.name:
+        elif "GRIT" in activity.name.upper():
             activity.imageurl = "https://lmimirror3pvr.azureedge.net/static/media/10902/5bc08000-7331-4420-9b20-28f61222e3d2/grit-research-landing-page-960x540.jpg"
-        elif "SPRINT" in activity.name:
+        elif "SPRINT" in activity.name.upper():
             activity.imageurl = "https://lmimirror3pvr.azureedge.net/static/media/13934/2b5bde16-dc62-4728-93c9-92a36b048de2/all-you-need-to-know-about-sprint-960x540.jpg"
         elif "THE TRIP" in activity.name.upper():
             activity.imageurl = "https://www.traena.com/media/2027/the-trip-_960x540.jpg"
