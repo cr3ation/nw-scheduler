@@ -34,7 +34,7 @@ def command(request, id, cmd):
                 if "Booked" in res:
                     activity.status = "Booked"
                     activity.save()
-                pushover.send(activity)
+                    pushover.send(activity)
             if cmd == "schedule" or cmd == "unschedule":
                 # DO STUFF
                 activity.scheduledbooking = not activity.scheduledbooking
