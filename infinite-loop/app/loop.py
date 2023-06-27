@@ -69,6 +69,8 @@ while True:
                         response.raise_for_status()  # Raise an exception for non-2xx response status codes
                         data = response.text
                         print_message(data)
+                        if "Booked" in data:
+                            break
                     except requests.exceptions.RequestException as err:
                         print_message(f"An error occurred while connecting to {api_url}: {err}. Retry in 10 sec.")
                         time.sleep(10)
@@ -76,9 +78,6 @@ while True:
                     except ValueError as err:
                         print_message(f"Failed to parse response data from {api_url}: {err}. Retry in 10 sec.")
                         time.sleep(10)
-                        break
-
-                    if "Booked" in data:
                         break
                 time.sleep(1)
     except Exception as err:
