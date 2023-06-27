@@ -13,12 +13,16 @@ Group activities is being fetched from Nordic Wellness every 20 min and stored i
 ## Installation
 You need docker and docker-compose to be installed before continue.
 
- 1. Edit `docker-compose.yml`. See *Environment Variables* section below
- 2. Build and run docker images
+ 1. Copy settings sample
+ ```shell
+cp docker-compose-sample.yml docker-compose.yml
+``` 
+ 2. Edit `docker-compose.yml`. See *Environment Variables* section below
+ 3. Build and run docker images
 ```shell
 docker-compose build && docker-compose up
 ```
- 3. Open a shell in to the docker container `nw-scheduler-app` and create a superuser to access the `http://server:8000/admin` interface. Then then start workers to fetch data from Nordic Wellness every 20 min
+ 4. Open a shell in to the docker container `nw-scheduler-app` and create a superuser to access the `http://server:8000/admin` interface. Then then start workers to fetch data from Nordic Wellness every 20 min
  ````shell
 python manage.py createsuperuser
 ... 

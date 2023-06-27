@@ -1,0 +1,48 @@
+version: '3.9'
+
+services:
+  app:
+    build:
+      context: ./django/
+    command:
+      sh -c "python manage.py wait_for_db &&
+            python manage.py makemigrations &&
+            python manage.py migrate &&
+            python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - 8000:8000
+      - 3000:3000
+    volumes:
+      - ./django/app:/app
+    environment:
+      - SECRET_KEY=secretkey
+      - DEBUG=1
+      - ALLOWED_HOSTS=127.0.0.1
+      - NW_CLUB_ID=129
+      - NW_USER_ID=123456
+      - NW_EMPLOYE_ID=1234
+      - PUSHOVER_USER=pushoveruser
+      - PUSHOVER_TOKEN=pushovertoken
+      - DB_HOST=db
+      - DB_NAME=devdb
+      - DB_USER=devuser
+      - DB_PASS=changeme
+      - TZ=Europe/Stockholm
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13-alpine
+    environment:
+      - POSTGRES_DB=devdb
+      - POSTGRES_USER=devuser
+      - POSTGRES_PASSWORD=changeme
+
+  curl-loop:
+    build: ./infinite-loop/
+    command:
+      sh -c "python loop.py"
+    environment:
+      - TZ=Europe/Stockholm
+    depends_on: 
+      - app

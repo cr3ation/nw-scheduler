@@ -104,3 +104,6 @@ db.sqlite3
 # macOS
 .DS_Store
 .DS_Store
+
+# Docker
+docker-compose.yml
