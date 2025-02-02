@@ -51,7 +51,7 @@
           <option value="">All</option>
           <option value="Booked" {% if request.GET.status == "Booked" %}selected{% endif %}>Booked</option>
           <option value="Reserved" {% if request.GET.status == "Reserved" %}selected{% endif %}>Reserved</option>
-          <option value="Available" {% if request.GET.status == "Available" %}selected{% endif %}>Available</option>
+          <option value="Bookable" {% if request.GET.status == "Bookable" %}selected{% endif %}>Bookable</option>
         </select>
       </div>
     </div>
