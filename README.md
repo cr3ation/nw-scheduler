@@ -40,6 +40,7 @@ Optional environment variables:
 * `SECRET_KEY` – Used by django. Can be whatever *(secretkey is default)*
 * `DEBUG` – `0` is False, `1` is True *(0 is default)*
 * `ALLOWED_HOSTS` – `127.0.0.1,*,localhost` *(127.0.0.1 is default)*
+* `CSRF_TRUSTED_ORIGINS` - URL this app when using reverse proxy  *(https://subdomain.example.com is default)*
 * `NW_CLUB_ID` – ID of a Nordic Wellness club. Use Chrome developer tools to filter requests from https://nordicwellness.se/boka/ to find your club *(mandatory)*
 * `NW_USER_ID` – ID of your Nordic Wellness user. Is always a numeric id *(mandatory)*
 * `NW_EMPLOYE_ID` – Filter group activity by your favorite leader. Is always a numeric id *(optional)*

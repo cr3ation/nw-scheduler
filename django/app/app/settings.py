@@ -129,6 +129,11 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# Trusted origins, such as 'https://subdomain.example.com'
+CSRF_TRUSTED_ORIGINS = [
+    os.environ.get('CSRF_TRUSTED_ORIGINS')
+]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
