@@ -5,6 +5,7 @@ ENV PYTHONUNBUFFERED 1
 
 COPY ./requirements.txt /requirements.txt
 COPY ./app ./app
+COPY ./docker-entrypoint.sh /docker-entrypoint.sh
 
 WORKDIR /app
 EXPOSE 8000
@@ -31,5 +32,6 @@ RUN python -m venv /py && \
 
 ENV PATH="/py/bin:$PATH"
 
-# USER app
-
+# Update permissions and run the entrypoint
+RUN chmod +x /docker-entrypoint.sh
+CMD [ "/bin/sh", "/docker-entrypoint.sh" ]

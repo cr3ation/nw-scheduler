@@ -127,10 +127,11 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
-STATIC_URL = '/static/'
 
-# The absolute path to the directory where collectstatic will collect static files
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_URL = 'static/'
+
+# Add this line to specify the directory for collected static files
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Trusted origins, such as 'https://subdomain.example.com'
 CSRF_TRUSTED_ORIGINS = [
