@@ -1,4 +1,4 @@
-FROM python:3.8-alpine3.15
+FROM python:3.12-alpine3.21
 LABEL maintainer="henrikengstrom.com"
 
 ENV PYTHONUNBUFFERED 1
@@ -22,6 +22,9 @@ RUN python -m venv /py && \
     apk add --update --no-cache git && \
     apk add --update --no-cache --virtual .tmp-deps \
         build-base postgresql-dev musl-dev && \
+    apk add --no-cache gcc && \
+    apk add --no-cache musl-dev && \
+    apk add --no-cache postgresql-dev && \
     /py/bin/pip install -r /requirements.txt && \
     apk del .tmp-deps && \
     adduser --disabled-password --no-create-home app
