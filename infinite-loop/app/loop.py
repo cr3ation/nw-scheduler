@@ -12,7 +12,7 @@ def print_message(message):
 
 
 # Wait for other services to start
-time.sleep(5)
+time.sleep(10)
 
 print("")
 print("The next booking will be fetched every 10 min")
@@ -56,30 +56,33 @@ while True:
             booking = datetime.strptime(data["upcoming"]["BookingStartsAt"], "%Y-%m-%dT%H:%M:%S%z").replace(tzinfo=None)
             print_message(f"Upcoming: {data['upcoming']['Name']} ({data['upcoming']['Instructor']}). Booking starts at: {booking}.")
 
-            # Check every second if booking is opened
-            for i in range(600):
-                # Get the current time as an offset-naive datetime
-                now = datetime.now()
-                # print_message(f"Now: {now}   |   Booking start: {booking}")
-
-                # Opened!
-                if now > booking:
-                    try:
-                        response = requests.get(api_url)
-                        response.raise_for_status()  # Raise an exception for non-2xx response status codes
-                        data = response.text
-                        print_message(data)
-                        if "Booked" in data:
+            # Check if now is less than 10 minutes until booking starts
+            if (booking - datetime.now()).total_seconds() <= 600:
+                print_message("Less than 10 minutes until booking starts. Checking every second if the booking has opened...")
+                # Check every second if booking is opened for 10 minutes
+                for i in range(600):
+                    now = datetime.now()
+                    # Opened!
+                    if now > booking:
+                        try:
+                            response = requests.get(api_url)
+                            response.raise_for_status()  # Raise an exception for non-2xx response status codes
+                            data = response.text
+                            print_message(data)
+                            if "Booked" in data:
+                                break
+                        except requests.exceptions.RequestException as err:
+                            print_message(f"An error occurred while connecting to {api_url}: {err}. Retry in 10 sec.")
+                            time.sleep(10)
                             break
-                    except requests.exceptions.RequestException as err:
-                        print_message(f"An error occurred while connecting to {api_url}: {err}. Retry in 10 sec.")
-                        time.sleep(10)
-                        break
-                    except ValueError as err:
-                        print_message(f"Failed to parse response data from {api_url}: {err}. Retry in 10 sec.")
-                        time.sleep(10)
-                        break
-                time.sleep(1)
+                        except ValueError as err:
+                            print_message(f"Failed to parse response data from {api_url}: {err}. Retry in 10 sec.")
+                            time.sleep(10)
+                            break
+                    time.sleep(1)
+            else:
+                time.sleep(600)
+                continue
     except Exception as err:
         print(f"An exception was thrown! {err}... Data: {data}")
         time.sleep(600)
