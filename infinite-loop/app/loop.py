@@ -3,6 +3,8 @@ import requests
 import time
 
 api_url = "http://app:8000/scheduled"
+fetch_api_url = "http://app:8000/fetch"
+last_fetch_time = time.time()
 
 # Nice looking output
 def print_message(message):
@@ -36,6 +38,18 @@ while True:
         print_message(f"Failed to parse response data from {api_url}: {err}. Retry in 10 sec.")
         time.sleep(10)
         continue
+
+    # Fetch new data from Nordic Wellness every 30 minutes
+    if time.time() - last_fetch_time >= 1800:
+        try:
+            fetch_response = requests.get(fetch_api_url)
+            fetch_response.raise_for_status()
+            print_message(f"Fetched data from {fetch_api_url}: {fetch_response.text}")
+            last_fetch_time = time.time()
+        except requests.exceptions.RequestException as err:
+            print_message(f"An error occurred while connecting to {fetch_api_url}: {err}. Retry in 30 min.")
+        except ValueError as err:
+            print_message(f"Failed to parse response data from {fetch_api_url}: {err}. Retry in 30 min.")
 
     try:
         # Wait and retry if no data returned
