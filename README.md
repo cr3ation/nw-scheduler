@@ -16,15 +16,21 @@ The *Nordic Wellness Scheduler* consists of three Docker containers:
 ## **Installation**
 Ensure you have **Docker** and **Docker Compose** installed before proceeding.
 
-### **1. Copy Sample Settings**
+### **1. Download Source Code**
+```sh
+git clone https://github.com/cr3ation/nw-scheduler.git
+cd nw-scheduler
+```
+
+### **2. Copy Sample Settings**
 ```sh
 cp docker-compose-sample.yml docker-compose.yml
 ```
 
-### **2. Edit `docker-compose.yml`**
+### **3. Edit `docker-compose.yml`**
 Modify the environment variables as needed (see the *Environment Variables* section below).
 
-### **3. Build and Run Docker Images**
+### **4. Build and Run Docker Images**
 ```sh
 docker-compose build && docker-compose up
 ```
