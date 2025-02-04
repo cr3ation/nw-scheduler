@@ -44,7 +44,7 @@ while True:
         try:
             fetch_response = requests.get(fetch_api_url)
             fetch_response.raise_for_status()
-            print_message(f"Fetched data from {fetch_api_url}: {fetch_response.text}")
+            print_message(f"Group activities fetched from Nordic Wellness.")
             last_fetch_time = time.time()
         except requests.exceptions.RequestException as err:
             print_message(f"An error occurred while connecting to {fetch_api_url}: {err}. Retry in 30 min.")
