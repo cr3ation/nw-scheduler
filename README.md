@@ -55,7 +55,7 @@ Open `docker-compose.yml` and configure the mandatory variables:
 | `DJANGO_SUPERUSER_USERNAME`    | Django admin username | `admin` |
 | `DJANGO_SUPERUSER_EMAIL`       | Superuser email | `admin@example.com` |
 | `DJANGO_SUPERUSER_PASSWORD`    | Superuser password | `password` |
-| `ALLOWED_HOSTS`                | Allowed hosts for Django | `127.0.0.1,*,localhost` |
+| `ALLOWED_HOSTS`                | Allowed hosts for Django `127.0.0.1,*,localhost` | `127.0.0.1` |
 | `CSRF_TRUSTED_ORIGINS`         | App URL when using reverse proxy | `https://subdomain.example.com` |
 | `NW_CLUB_ID`                   | ID of a Nordic Wellness club (mandatory) | _None_ |
 | `NW_USER_ID`                   | ID of your Nordic Wellness user (mandatory) | _None_ |
