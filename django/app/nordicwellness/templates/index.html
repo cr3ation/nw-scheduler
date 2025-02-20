@@ -85,51 +85,55 @@
 </div>
 
 <!-- Activities Display -->
-<div style="display: flex; flex-direction: row; flex-wrap: wrap">
-  {% for activity in activities %}
-  {% with activity.starttime|date:"l" as day_of_week %}
-  <!-- Filter activities based on selected day of the week and status -->
-  {% if day_of_week == request.GET.dayOfWeek or not request.GET.dayOfWeek %}
-  {% if activity.status == request.GET.status or not request.GET.status %}
-  <!-- Single Card Template -->
-  <div class="card" style="width: 29rem; margin: 10px">
-    <img src="{{ activity.imageurl }}" class="card-img-top" >
-    {% if activity.booking_started == False %}
-    <div class="card bg-danger">
-      <div class="card-body text-center">
-        <p class="card-text">Booking opens {{ activity.bookingstartatstr }}</p>
+<div class="container">
+  <div class="row justify-content-center">
+    {% for activity in activities %}
+    {% with activity.starttime|date:"l" as day_of_week %}
+    <!-- Filter activities based on selected day of the week and status -->
+    {% if day_of_week == request.GET.dayOfWeek or not request.GET.dayOfWeek %}
+    {% if activity.status == request.GET.status or not request.GET.status %}
+    <!-- Single Card Template -->
+    <div class="col-md-6 col-lg-4 d-flex align-items-stretch">
+      <div class="card mb-4" style="width: 100%;">
+        <img src="{{ activity.imageurl }}" class="card-img-top">
+        {% if activity.booking_started == False %}
+        <div class="card bg-danger">
+          <div class="card-body text-center">
+            <p class="card-text">Booking opens {{ activity.bookingstartatstr }}</p>
+          </div>
+        </div>
+        {% endif %}
+        <div class="card-body">
+          <div style="display: flex; flex-direction: row">
+            <h5 class="card-title">{{ activity.name }}</h5>
+            <!-- Colored circle -->
+            <div style="
+              background: {{ activity.color }};
+              width: 20px;
+              height: 20px;
+              margin-left: 10px;
+              border-radius: 50%;
+            "></div>
+          </div>
+          <p class="card-text">{{ activity.start_time_str }}</p>
+          <p class="card-text">🏋🏻‍♀️<b> {{ activity.instructor }}</b></p>     
+          
+          <!-- Booking buttons based on activity status -->
+          {% if activity.booking_started == True and "Booked" not in activity.status and "Reserved" not in activity.status %}
+            <a href="/command/{{ activity.id }}/book" class="btn btn-primary">Book</a>
+          {% elif activity.booking_started == False and activity.scheduledbooking == False %}
+            <a href="/command/{{ activity.id }}/schedule" class="btn btn-primary">Schedule booking</a>
+          {% elif activity.booking_started == False and activity.scheduledbooking == True %}
+            <a href="/command/{{ activity.id }}/unschedule" class="btn btn-primary">Unschedule</a>
+          {% endif %}
+        </div>
       </div>
     </div>
     {% endif %}
-    <div class="card-body">
-      <div style="display: flex; flex-direction: row">
-        <h5 class="card-title">{{ activity.name }}</h5>
-        <!-- Colored circle -->
-        <div style="
-          background: {{ activity.color }};
-          width: 20px;
-          height: 20px;
-          margin-left: 10px;
-          border-radius: 50%;
-        "></div>
-      </div>
-      <p class="card-text">{{ activity.start_time_str }}</p>
-      <p class="card-text">🏋🏻‍♀️<b> {{ activity.instructor }}</b></p>     
-      
-      <!-- Booking buttons based on activity status -->
-      {% if activity.booking_started == True and "Booked" not in activity.status and "Reserved" not in activity.status %}
-        <a href="/command/{{ activity.id }}/book" class="btn btn-primary">Book</a>
-      {% elif activity.booking_started == False and activity.scheduledbooking == False %}
-        <a href="/command/{{ activity.id }}/schedule" class="btn btn-primary">Schedule booking</a>
-      {% elif activity.booking_started == False and activity.scheduledbooking == True %}
-        <a href="/command/{{ activity.id }}/unschedule" class="btn btn-primary">Unschedule</a>
-      {% endif %}
-    </div>
+    {% endif %}
+    {% endwith %}
+    {% endfor %}
   </div>
-  {% endif %}
-  {% endif %}
-  {% endwith %}
-  {% endfor %}
 </div>
 <!-- Refresh Button -->
 <a href="/fetch" class="btn btn-primary btn-lg btn-block" style="width:100%;">Refresh</a>
