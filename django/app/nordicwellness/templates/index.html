@@ -5,6 +5,7 @@
 <head>
   <!-- Meta and Bootstrap CSS -->
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css"
         rel="stylesheet"
         integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0"
@@ -31,7 +32,7 @@
     });
   </script>
 
-  <!-- Custom CSS for background and filter text -->
+  <!-- Custom CSS for background, filter text, and spacing adjustments -->
   <style>
     body {
       background: url("{% static 'images/background.jpg' %}") no-repeat center center fixed;
@@ -49,6 +50,15 @@
     }
     .filter-label {
       color: #ffffffb3; /* Brighter color for filter text */
+    }
+    /* Media query for extra small screens:
+       When only one card is on a row, the column width is reduced to 90%
+       to provide some horizontal spacing. */
+    @media (max-width: 576px) {
+      .row.justify-content-center > [class*="col-"] {
+        flex: 0 0 85%;
+        max-width: 85%;
+      }
     }
   </style>
 </head>
@@ -96,7 +106,7 @@
     {% if day_of_week == request.GET.dayOfWeek or not request.GET.dayOfWeek %}
     {% if activity.status == request.GET.status or not request.GET.status %}
     <!-- Single Card Template -->
-    <div class="col-md-6 col-lg-4 d-flex align-items-stretch">
+    <div class="col-12 col-md-6 col-lg-4 d-flex align-items-stretch">
       <div class="card mb-4" style="width: 100%;">
         <img src="{{ activity.imageurl }}" class="card-img-top">
         {% if activity.booking_started == False %}
