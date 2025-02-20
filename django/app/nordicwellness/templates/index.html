@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +9,11 @@
         rel="stylesheet"
         integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0"
         crossorigin="anonymous">
+
+  <!-- Favicon -->
+  <link rel="icon" href="{% static 'images/favicon-32x32.png' %}" type="image/x-icon">
+
+  <!-- Page Title -->
   <title>Nordic Wellness Scheduler</title>
   <!-- JavaScript to auto-submit form on selection change -->
   <script>

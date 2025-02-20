@@ -1,8 +1,12 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <!-- Specifies the character encoding for the document -->
     <meta charset="UTF-8">
+
+    <link rel="icon" href="{% static 'images/favicon-32x32.png' %}" type="image/x-icon">
     
     <!-- Ensures proper rendering and touch zooming on mobile devices -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,7 +21,8 @@
     <style>
         /* Makes the body background light gray and centers content vertically */
         body {
-            background: #f8f9fa; /* Light gray background */
+            background: url('/static/images/background.jpg') no-repeat center center fixed; /* Add background image */
+            background-size: cover; /* Ensure the background covers the entire page */
             display: flex; /* Enables flexbox for easy centering */
             justify-content: center; /* Centers content horizontally */
             align-items: center; /* Centers content vertically */
