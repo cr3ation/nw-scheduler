@@ -31,7 +31,7 @@
     });
   </script>
 
-  <!-- Custom CSS for background -->
+  <!-- Custom CSS for background and filter text -->
   <style>
     body {
       background: url("{% static 'images/background.jpg' %}") no-repeat center center fixed;
@@ -47,6 +47,9 @@
       background: rgba(0, 0, 0, 0.5);
       z-index: -1;
     }
+    .filter-label {
+      color: #ffffffb3; /* Brighter color for filter text */
+    }
   </style>
 </head>
 <body>
@@ -58,7 +61,7 @@
     <div class="row">
       <!-- Day of the Week Filter -->
       <div class="col">
-        <label for="dayOfWeek">Day of the Week</label>
+        <label for="dayOfWeek" class="filter-label">Day of the Week</label>
         <select id="dayOfWeek" name="dayOfWeek" class="form-control">
           <option value="">All</option>
           <option value="Monday" {% if request.GET.dayOfWeek == "Monday" %}selected{% endif %}>Monday</option>
@@ -72,7 +75,7 @@
       </div>
       <!-- Status Filter -->
       <div class="col">
-        <label for="status">Status</label>
+        <label for="status" class="filter-label">Status</label>
         <select id="status" name="status" class="form-control">
           <option value="">All</option>
           <option value="Booked" {% if request.GET.status == "Booked" %}selected{% endif %}>Booked</option>
