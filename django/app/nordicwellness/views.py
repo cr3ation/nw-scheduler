@@ -1,6 +1,7 @@
 from unicodedata import name
 from datetime import datetime, timedelta
 from django import views
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.utils import timezone
@@ -19,6 +20,7 @@ def get_activities():
 
 
 # Create your views here.
+@login_required
 def index(request):
     # check_new_activitites()
     activities = get_activities()

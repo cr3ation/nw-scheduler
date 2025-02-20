@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 import pytz
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -111,6 +112,36 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+############################################
+# Session settings
+############################################
+
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 31  # 1 month
+
+# False if you want to keep the session after the browser is closed
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+
+# Ensure the session cookie is updated with each response
+SESSION_SAVE_EVERY_REQUEST = True
+
+# Optionally, set the session engine to use database-backed sessions
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+
+
+############################################
+# Login redirect settings
+############################################
+
+LOGIN_URL = "login"  # Redirect to the default login page
+
+LOGIN_REDIRECT_URL = "/"  # Redirect after successful login
+
+LOGOUT_REDIRECT_URL = "/accounts/login/"  # Redirect after logout
+
+############################################
+
+
 
 
 # Internationalization

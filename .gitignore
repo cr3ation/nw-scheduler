@@ -54,7 +54,6 @@ coverage.xml
 *.log
 local_settings.py
 /django/app/staticfiles/
-/django/app/static/
 
 # Flask stuff:
 instance/
