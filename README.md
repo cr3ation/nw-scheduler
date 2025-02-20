@@ -92,8 +92,13 @@ The following volume is mounted in the container:
 ## **URLs**
 `http://localhost:8000` – homepage
 `http://localhost:8000/login` - required to access homepage. Use admin credentials specified in `docker-compose.yaml`  
-`http://localhost:8000/admin` – admin page. Use superuser credentials created in step 3 of the installation instructions  
 `http://localhost:8000/fetch`– fetch data on demand from Nordic Wellness API  
+`http://localhost:8000/admin` – admin page. Use superuser credentials created in step 3 of the installation instructions  
+
+
+<div align="center">
+    <img src="docs/admin.png" width="80%">
+</div>
 
 ---
 
