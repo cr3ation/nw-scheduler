@@ -43,7 +43,7 @@ Modify the environment variables as needed (see the *Environment Variables* sect
 docker-compose build && docker-compose up
 ```
 
-### **5. Navigate and authenticate **
+### **5. Navigate and authenticate**
 Open http://127.0.0.1:8000 in browser and authenticate with admin credentials specified in `docker-compose-yml`
 
 ---
