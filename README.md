@@ -4,6 +4,14 @@
 
 Group activities are fetched from Nordic Wellness every 30 minutes and stored in a local database. If needed, fetching new data can be manually initiated using the blue **Refresh** button at the bottom of `http://server:8000`.
 
+<br>
+
+<div align="center">
+    <img src="docs/login_computer.png" width="50%"><img src="docs/booking_computer.png" width="50%">
+</div>
+
+
+
 ## **Architecture**
 The *Nordic Wellness Scheduler* consists of three Docker containers:
 
