@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,12 +9,11 @@
         rel="stylesheet"
         integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0"
         crossorigin="anonymous">
-
-  <!-- Favicon -->
   <link rel="icon" href="{% static 'images/favicon-32x32.png' %}" type="image/x-icon">
 
   <!-- Page Title -->
   <title>Nordic Wellness Scheduler</title>
+
   <!-- JavaScript to auto-submit form on selection change -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -32,15 +30,26 @@
     });
   </script>
 
-  <!-- Custom CSS for background, filter text, and spacing adjustments -->
+  <!-- Custom CSS for fixed background and layout adjustments -->
   <style>
-    body {
-      background: url("{% static 'images/background.jpg' %}") no-repeat center center fixed;
-      background-size: cover;
-      position: relative;
+    html, body {
+      height: 100%;
+      margin: 0;
     }
+    /* Fixed background element */
+    .fixed-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url("{% static 'images/background.jpg' %}") no-repeat center center;
+      background-size: cover;
+      z-index: -2;
+    }
+    /* Background filter overlay */
     .background-filter {
-      position: absolute;
+      position: fixed;
       top: 0;
       left: 0;
       width: 100%;
@@ -49,11 +58,9 @@
       z-index: -1;
     }
     .filter-label {
-      color: #ffffffb3; /* Brighter color for filter text */
+      color: #ffffffb3;
     }
-    /* Media query for extra small screens:
-       When only one card is on a row, the column width is reduced to 90%
-       to provide some horizontal spacing. */
+    /* Media query for extra small screens */
     @media (max-width: 576px) {
       .row.justify-content-center > [class*="col-"] {
         flex: 0 0 85%;
@@ -63,93 +70,94 @@
   </style>
 </head>
 <body>
-<div class="background-filter"></div>
+  <!-- Fixed background elements -->
+  <div class="fixed-bg"></div>
+  <div class="background-filter"></div>
 
-<!-- Filter Form -->
-<div class="container">
-  <form method="GET" action="">
-    <div class="row">
-      <!-- Day of the Week Filter -->
-      <div class="col">
-        <label for="dayOfWeek" class="filter-label">Day of the Week</label>
-        <select id="dayOfWeek" name="dayOfWeek" class="form-control">
-          <option value="">All</option>
-          <option value="Monday" {% if request.GET.dayOfWeek == "Monday" %}selected{% endif %}>Monday</option>
-          <option value="Tuesday" {% if request.GET.dayOfWeek == "Tuesday" %}selected{% endif %}>Tuesday</option>
-          <option value="Wednesday" {% if request.GET.dayOfWeek == "Wednesday" %}selected{% endif %}>Wednesday</option>
-          <option value="Thursday" {% if request.GET.dayOfWeek == "Thursday" %}selected{% endif %}>Thursday</option>
-          <option value="Friday" {% if request.GET.dayOfWeek == "Friday" %}selected{% endif %}>Friday</option>
-          <option value="Saturday" {% if request.GET.dayOfWeek == "Saturday" %}selected{% endif %}>Saturday</option>
-          <option value="Sunday" {% if request.GET.dayOfWeek == "Sunday" %}selected{% endif %}>Sunday</option>
-        </select>
-      </div>
-      <!-- Status Filter -->
-      <div class="col">
-        <label for="status" class="filter-label">Status</label>
-        <select id="status" name="status" class="form-control">
-          <option value="">All</option>
-          <option value="Booked" {% if request.GET.status == "Booked" %}selected{% endif %}>Booked</option>
-          <option value="Reserved" {% if request.GET.status == "Reserved" %}selected{% endif %}>Reserved</option>
-          <option value="Bookable" {% if request.GET.status == "Bookable" %}selected{% endif %}>Bookable</option>
-        </select>
-      </div>
-    </div>
-  </form>
-</div>
-
-<!-- Activities Display -->
-<div class="container">
-  <div class="row justify-content-center">
-    {% for activity in activities %}
-    {% with activity.starttime|date:"l" as day_of_week %}
-    <!-- Filter activities based on selected day of the week and status -->
-    {% if day_of_week == request.GET.dayOfWeek or not request.GET.dayOfWeek %}
-    {% if activity.status == request.GET.status or not request.GET.status %}
-    <!-- Single Card Template -->
-    <div class="col-12 col-md-6 col-lg-4 d-flex align-items-stretch">
-      <div class="card mb-4" style="width: 100%;">
-        <img src="{{ activity.imageurl }}" class="card-img-top">
-        {% if activity.booking_started == False %}
-        <div class="card bg-danger">
-          <div class="card-body text-center">
-            <p class="card-text">Booking opens {{ activity.bookingstartatstr }}</p>
-          </div>
+  <!-- Filter Form -->
+  <div class="container">
+    <form method="GET" action="">
+      <div class="row">
+        <!-- Day of the Week Filter -->
+        <div class="col">
+          <label for="dayOfWeek" class="filter-label">Day of the Week</label>
+          <select id="dayOfWeek" name="dayOfWeek" class="form-control">
+            <option value="">All</option>
+            <option value="Monday" {% if request.GET.dayOfWeek == "Monday" %}selected{% endif %}>Monday</option>
+            <option value="Tuesday" {% if request.GET.dayOfWeek == "Tuesday" %}selected{% endif %}>Tuesday</option>
+            <option value="Wednesday" {% if request.GET.dayOfWeek == "Wednesday" %}selected{% endif %}>Wednesday</option>
+            <option value="Thursday" {% if request.GET.dayOfWeek == "Thursday" %}selected{% endif %}>Thursday</option>
+            <option value="Friday" {% if request.GET.dayOfWeek == "Friday" %}selected{% endif %}>Friday</option>
+            <option value="Saturday" {% if request.GET.dayOfWeek == "Saturday" %}selected{% endif %}>Saturday</option>
+            <option value="Sunday" {% if request.GET.dayOfWeek == "Sunday" %}selected{% endif %}>Sunday</option>
+          </select>
         </div>
-        {% endif %}
-        <div class="card-body">
-          <div style="display: flex; flex-direction: row">
-            <h5 class="card-title">{{ activity.name }}</h5>
-            <!-- Colored circle -->
-            <div style="
-              background: {{ activity.color }};
-              width: 20px;
-              height: 20px;
-              margin-left: 10px;
-              border-radius: 50%;
-            "></div>
-          </div>
-          <p class="card-text">{{ activity.start_time_str }}</p>
-          <p class="card-text">🏋🏻‍♀️<b> {{ activity.instructor }}</b></p>     
-          
-          <!-- Booking buttons based on activity status -->
-          {% if activity.booking_started == True and "Booked" not in activity.status and "Reserved" not in activity.status %}
-            <a href="/command/{{ activity.id }}/book" class="btn btn-primary">Book</a>
-          {% elif activity.booking_started == False and activity.scheduledbooking == False %}
-            <a href="/command/{{ activity.id }}/schedule" class="btn btn-primary">Schedule booking</a>
-          {% elif activity.booking_started == False and activity.scheduledbooking == True %}
-            <a href="/command/{{ activity.id }}/unschedule" class="btn btn-primary">Unschedule</a>
-          {% endif %}
+        <!-- Status Filter -->
+        <div class="col">
+          <label for="status" class="filter-label">Status</label>
+          <select id="status" name="status" class="form-control">
+            <option value="">All</option>
+            <option value="Booked" {% if request.GET.status == "Booked" %}selected{% endif %}>Booked</option>
+            <option value="Reserved" {% if request.GET.status == "Reserved" %}selected{% endif %}>Reserved</option>
+            <option value="Bookable" {% if request.GET.status == "Bookable" %}selected{% endif %}>Bookable</option>
+          </select>
         </div>
       </div>
-    </div>
-    {% endif %}
-    {% endif %}
-    {% endwith %}
-    {% endfor %}
+    </form>
   </div>
-</div>
-<!-- Refresh Button -->
-<a href="/fetch" class="btn btn-primary btn-lg btn-block" style="width:100%;">Refresh</a>
 
+  <!-- Activities Display -->
+  <div class="container">
+    <div class="row justify-content-center">
+      {% for activity in activities %}
+      {% with activity.starttime|date:"l" as day_of_week %}
+      {% if day_of_week == request.GET.dayOfWeek or not request.GET.dayOfWeek %}
+      {% if activity.status == request.GET.status or not request.GET.status %}
+      <!-- Single Card Template -->
+      <div class="col-12 col-md-6 col-lg-4 d-flex align-items-stretch">
+        <div class="card mb-4" style="width: 100%;">
+          <img src="{{ activity.imageurl }}" class="card-img-top">
+          {% if activity.booking_started == False %}
+          <div class="card bg-danger">
+            <div class="card-body text-center">
+              <p class="card-text">Booking opens {{ activity.bookingstartatstr }}</p>
+            </div>
+          </div>
+          {% endif %}
+          <div class="card-body">
+            <div style="display: flex; flex-direction: row">
+              <h5 class="card-title">{{ activity.name }}</h5>
+              <!-- Colored circle indicator -->
+              <div style="
+                background: {{ activity.color }};
+                width: 20px;
+                height: 20px;
+                margin-left: 10px;
+                border-radius: 50%;
+              "></div>
+            </div>
+            <p class="card-text">{{ activity.start_time_str }}</p>
+            <p class="card-text">🏋🏻‍♀️<b> {{ activity.instructor }}</b></p>     
+            
+            <!-- Booking buttons based on activity status -->
+            {% if activity.booking_started == True and "Booked" not in activity.status and "Reserved" not in activity.status %}
+              <a href="/command/{{ activity.id }}/book" class="btn btn-primary">Book</a>
+            {% elif activity.booking_started == False and activity.scheduledbooking == False %}
+              <a href="/command/{{ activity.id }}/schedule" class="btn btn-primary">Schedule booking</a>
+            {% elif activity.booking_started == False and activity.scheduledbooking == True %}
+              <a href="/command/{{ activity.id }}/unschedule" class="btn btn-primary">Unschedule</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% endif %}
+      {% endwith %}
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Refresh Button -->
+  <a href="/fetch" class="btn btn-primary btn-lg btn-block" style="width:100%;">Refresh</a>
 </body>
 </html>
