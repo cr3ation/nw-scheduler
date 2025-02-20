@@ -35,6 +35,9 @@ Modify the environment variables as needed (see the *Environment Variables* sect
 docker-compose build && docker-compose up
 ```
 
+### **5. Navigate and authenticate **
+Open http://127.0.0.1:8000 in browser and authenticate with admin credentials specified in `docker-compose-yml`
+
 ---
 
 ## **Environment Variables**
@@ -79,7 +82,8 @@ The following volume is mounted in the container:
 ---
 
 ## **URLs**
-`http://localhost:8000` – homepage  
+`http://localhost:8000` – homepage
+`http://localhost:8000/login` - required to access homepage. Use admin credentials specified in `docker-compose.yaml`  
 `http://localhost:8000/admin` – admin page. Use superuser credentials created in step 3 of the installation instructions  
 `http://localhost:8000/fetch`– fetch data on demand from Nordic Wellness API  
 
